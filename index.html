@@ -26,7 +26,7 @@
         <div class="header-content">
           <a href="index.html"
             ><div class="logotype">
-              <h1 class="logotype-text">Loripsum<span>|</span></h1>
+              <h1 class="logotype-text">Loripsum</h1>
               <p>
                 <span>Tennisförening<br />Norrköping</span>
               </p>
@@ -164,15 +164,46 @@
             <ul>
               <li>
                 <label for="booking-first-name">Förnamn*</label>
-                <input id="booking-first-name" type="text" required />
+                <input
+                  id="booking-first-name"
+                  type="text"
+                  placeholder="Anders"
+                  required
+                />
               </li>
               <li>
                 <label for="booking-last-name">Efternamn*</label>
-                <input id="booking-last-name" type="text" required />
+                <input
+                  id="booking-last-name"
+                  type="text"
+                  placeholder="Andersson"
+                  required
+                />
               </li>
               <li>
                 <label for="booking-email">E-mail*</label>
-                <input id="booking-email" type="email" required />
+                <input
+                  id="booking-email"
+                  type="email"
+                  placeholder="anders@mail.com"
+                  required
+                />
+              </li>
+              <li>
+                <label for="booking-phone-number">Telefonnummer</label>
+                <input
+                  id="booking-phone-number"
+                  type="tel"
+                  placeholder="0720-00 00 00"
+                />
+              </li>
+              <li>
+                <label for="booking-member-id">Medlems-id</label>
+                <input
+                  id="booking-member-id"
+                  type="text"
+                  placeholder="12KVM8X"
+                />
               </li>
               <li>
                 <label for="booking-date">Datum*</label>
@@ -181,10 +212,6 @@
               <li>
                 <label for="booking-time">Klockslag*</label>
                 <input id="booking-time" type="time" required />
-              </li>
-              <li>
-                <label for="booking-member-id">Medlems-id</label>
-                <input id="booking-member-id" type="text" />
               </li>
               <li>
                 <label for="booking-changeroom-mens">Omkl. för herrar?</label>
@@ -198,7 +225,9 @@
                 <label for="booking-sauna">Boka även bastu?</label>
                 <input id="booking-sauna" type="checkbox" />
               </li>
-              <li><input type="submit" value="Skicka bokningsförfrågan" /></li>
+              <li>
+                <br /><input type="submit" value="Skicka bokningsförfrågan" />
+              </li>
             </ul>
           </form>
         </div>

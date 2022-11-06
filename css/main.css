@@ -88,7 +88,8 @@ form li {
 }
 
 input[type="text"],
-input[type="email"] {
+input[type="email"],
+input[type="tel"] {
   min-width: 200px;
   padding-left: 2px;
   display: table-cell;
@@ -97,7 +98,9 @@ input[type="email"] {
 label {
   margin-right: 10px;
   font-family: Arial, Helvetica, sans-serif;
-  width: 90px;
+  font-weight: bold;
+  font-size: 14px;
+  width: 130px;
   display: table-cell;
 }
 
@@ -152,7 +155,7 @@ label {
       rgba(184, 188, 177, 0.25),
       rgba(184, 188, 177, 1)
     ),
-    url("/images/tennis_court_dome_indoors.jpg");
+    url("../images/tennis_court_dome_indoors.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -168,7 +171,7 @@ label {
       rgba(177, 186, 188, 0.4),
       rgb(77, 133, 143, 0.8)
     ),
-    url("/images/tennis_background_man_floor.jpg");
+    url("../images/tennis_background_man_floor.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
