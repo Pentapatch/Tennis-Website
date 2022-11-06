@@ -5,11 +5,6 @@
   height: 80px;
   display: block;
   background-color: var(--header-color);
-  /* background-image: linear-gradient(
-      rgba(120, 155, 120, 0.75),
-      rgba(120, 155, 120, 0.75)
-    ),
-    url("/images/tennis_club_banner.jpg"); */
   background-position-y: -120px;
 }
 
@@ -25,6 +20,10 @@
   height: 100%;
   display: table;
   float: left;
+  background-image: url("../images/tennis_ball_icon.png");
+  background-position: 12px;
+  background-repeat: no-repeat;
+  background-size: 45px 45px;
 }
 
 .logotype h1 {
@@ -80,7 +79,7 @@
 
 .navigation a:hover,
 a.active-nav {
-  color: var(--section-color-light);
+  color: var(--link-active-nav-color);
   letter-spacing: 2px;
   transition: letter-spacing 0.5s ease, color 0.2s ease;
   -webkit-transition: letter-spacing 0.5s ease, color 0.2s ease;
@@ -107,7 +106,7 @@ a.active-nav {
   }
 }
 
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 650px) {
   .logotype span {
     display: none;
   }

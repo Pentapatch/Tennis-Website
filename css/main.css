@@ -7,6 +7,7 @@
   --section-color-light: rgb(184, 188, 177);
   --link-inactive-color: #384e11;
   --link-active-color: #9b0f0f;
+  --link-active-nav-color: #d8dbaf;
   --link-active-line-color: #743d0d;
   --link-highlight-color: #e67008;
 }
@@ -20,11 +21,25 @@
 
 h1 {
   font-family: "Merriweather", serif;
-  font-size: x-large;
+  font-style: italic;
+  font-size: 26px;
+}
+
+h2 {
+  font-family: "News Cycle", sans-serif;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+h3 {
+  font-family: "News Cycle", sans-serif;
+  font-weight: normal;
+  font-size: 20px;
 }
 
 p {
   font-size: medium;
+  font-family: Arial, Helvetica, sans-serif;
   color: #232020ff;
   margin-bottom: 10px;
 }
@@ -33,37 +48,47 @@ img {
   box-sizing: border-box;
   border-width: 10px;
   border-radius: 20px;
-  border-color: white;
+  border-color: transparent;
   border-style: solid;
   object-fit: cover;
+  transition: all 0.25s ease;
 }
 
 img:hover {
   border-width: 2px;
-  border-radius: 5px;
-  transition: all 0.5s ease;
+  border-radius: 0px;
+  border-color: white;
+  transition: all 0.25s ease;
 }
 
 hr {
   margin-top: 10px;
-  color: rgb(15, 74, 44);
+  margin-bottom: 10px;
+  border: none;
+  border-top: 1px dotted var(--link-inactive-color);
 }
 
 /* Forms layout */
 
 form li {
   list-style: none;
+  display: table;
   margin-top: 5px;
 }
 
-input {
+input[type="text"],
+input[type="email"] {
   min-width: 200px;
   padding-left: 2px;
+  display: table-cell;
   /* outline: none; */
 }
 
 label {
   margin-right: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 90px;
+  display: table-cell;
 }
 
 /* Layout management */
