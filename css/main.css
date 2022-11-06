@@ -44,7 +44,31 @@ p {
   margin-bottom: 10px;
 }
 
-img {
+p.contain-content {
+  display: inline-block;
+}
+
+p img.float-left {
+  float: left;
+  margin-right: 10px;
+}
+
+p img.float-right {
+  float: right;
+  margin-left: 10px;
+}
+
+img.circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 5px solid white;
+  object-fit: cover;
+  float: left;
+  margin-right: 10px;
+}
+
+/* img {
   box-sizing: border-box;
   border-width: 10px;
   border-radius: 20px;
@@ -59,7 +83,7 @@ img:hover {
   border-radius: 0px;
   border-color: white;
   transition: all 0.25s ease;
-}
+} */
 
 hr {
   margin-top: 10px;
@@ -138,11 +162,9 @@ label {
 
 .section-container {
   background-color: var(--section-color);
-  /* background-color: rgb(162, 210, 162); */
-  /* background-image: url("/images/tennis_court_dome_indoors.jpg"); */
   background-image: radial-gradient(
       rgba(184, 188, 177, 0.25),
-      rgba(184, 188, 177, 0.75)
+      rgba(184, 188, 177, 1)
     ),
     url("/images/tennis_court_dome_indoors.jpg");
   background-position: center;
@@ -150,13 +172,46 @@ label {
   background-repeat: no-repeat;
   display: block;
   width: 100%;
-  /* min-height: 200px; */
   height: 100vh;
   position: relative;
 }
 
+.section-container-b {
+  background-color: var(--section-color);
+  background-image: radial-gradient(
+      rgba(177, 186, 188, 0.4),
+      rgb(77, 133, 143, 0.8)
+    ),
+    url("/images/tennis_background_man_floor.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: table;
+  width: 100%;
+  min-height: 50vh;
+  position: relative;
+}
+
+.section-container-b h1 {
+  font-size: 100px;
+  text-align: center;
+  color: white;
+}
+
+.section-container-b p,
+.section-container-b a {
+  font-size: 20px;
+  text-align: center;
+  font-style: italic;
+  color: white;
+}
+
+.section-container-b div {
+  display: table-cell;
+  vertical-align: middle;
+}
+
 .section {
-  /* background-color: rgb(128, 171, 157); */
   background-color: var(--section-color);
   width: 100%;
   height: 100%;

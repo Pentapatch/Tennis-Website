@@ -4,7 +4,7 @@
 // Setup the default values
 const timeAheadAllowed = 14;
 const firstAvailableTime = 8;
-const lastAvailableTime = 22;
+const lastAvailableTime = 20;
 const lengthOfBooking = 2;
 
 // Get todays date
