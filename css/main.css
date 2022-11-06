@@ -1,0 +1,174 @@
+/* Color palette */
+
+:root {
+  --header-color: #232020ff;
+  --content-color: rgb(244, 249, 243);
+  --section-color: rgb(204, 211, 193);
+  --section-color-light: rgb(184, 188, 177);
+  --link-inactive-color: #384e11;
+  --link-active-color: #9b0f0f;
+  --link-active-line-color: #743d0d;
+  --link-highlight-color: #e67008;
+}
+
+/* General styling */
+
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
+h1 {
+  font-family: "Merriweather", serif;
+  font-size: x-large;
+}
+
+p {
+  font-size: medium;
+  color: #232020ff;
+  margin-bottom: 10px;
+}
+
+img {
+  box-sizing: border-box;
+  border-width: 10px;
+  border-radius: 20px;
+  border-color: white;
+  border-style: solid;
+  object-fit: cover;
+}
+
+img:hover {
+  border-width: 2px;
+  border-radius: 5px;
+  transition: all 0.5s ease;
+}
+
+hr {
+  margin-top: 10px;
+  color: rgb(15, 74, 44);
+}
+
+/* Forms layout */
+
+form li {
+  list-style: none;
+  margin-top: 5px;
+}
+
+input {
+  min-width: 200px;
+  padding-left: 2px;
+  /* outline: none; */
+}
+
+label {
+  margin-right: 10px;
+}
+
+/* Layout management */
+
+.v-align {
+  box-sizing: border-box;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* Content */
+
+.content {
+  width: 70%;
+  height: 100%;
+  display: table;
+  margin: 0 auto;
+  padding: 20px 0px;
+  transition: width 0.5s ease;
+  color: black;
+  box-sizing: border-box;
+}
+
+.content-container {
+  background-color: var(--content-color);
+  display: block;
+  width: 100%;
+  min-height: 200px;
+}
+
+.content a {
+  color: var(--link-inactive-color);
+  font-weight: bold;
+  text-decoration: underline dotted var(--link-inactive-color);
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+.content a:hover {
+  color: var(--link-active-color);
+  text-decoration: underline var(--link-active-line-color);
+  transition: all 0.2s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+/* Section */
+
+.section-container {
+  background-color: var(--section-color);
+  /* background-color: rgb(162, 210, 162); */
+  /* background-image: url("/images/tennis_court_dome_indoors.jpg"); */
+  background-image: radial-gradient(
+      rgba(184, 188, 177, 0.25),
+      rgba(184, 188, 177, 0.75)
+    ),
+    url("/images/tennis_court_dome_indoors.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: block;
+  width: 100%;
+  /* min-height: 200px; */
+  height: 100vh;
+  position: relative;
+}
+
+.section {
+  /* background-color: rgb(128, 171, 157); */
+  background-color: var(--section-color);
+  width: 100%;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+  padding: 20px 20px;
+  color: black;
+  box-sizing: border-box;
+}
+
+/* Content split container */
+
+.content ul.split {
+  padding-top: 10px;
+  list-style: none;
+  display: table;
+}
+
+.content ul.split > li {
+  display: table-cell;
+  vertical-align: top;
+  padding-right: 20px;
+}
+
+/* Responsiveness */
+
+@media screen and (max-width: 1100px) {
+  .content {
+    width: 95%;
+    transition: width 0.5s ease;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .content ul.split > li {
+    display: table-row;
+    vertical-align: top;
+    padding-right: 20px;
+  }
+}

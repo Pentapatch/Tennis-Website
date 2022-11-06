@@ -1,0 +1,136 @@
+/* Header customization */
+
+.header {
+  width: 100%;
+  height: 80px;
+  display: block;
+  background-color: var(--header-color);
+  /* background-image: linear-gradient(
+      rgba(120, 155, 120, 0.75),
+      rgba(120, 155, 120, 0.75)
+    ),
+    url("/images/tennis_club_banner.jpg"); */
+  background-position-y: -120px;
+}
+
+.header-content {
+  width: 70%;
+  height: 100%;
+  display: block;
+  margin: 0 auto;
+  transition: width 0.5s ease;
+}
+
+.logotype {
+  height: 100%;
+  display: table;
+  float: left;
+}
+
+.logotype h1 {
+  font-family: "Poppins", sans-serif;
+  color: rgb(244, 244, 244);
+  text-transform: uppercase;
+  letter-spacing: 8px;
+  font-size: 32px;
+  font-weight: bold;
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.logotype p {
+  font-family: "Poppins", sans-serif;
+  color: rgb(244, 244, 244);
+  text-transform: uppercase;
+  font-size: 14px;
+  height: 100%;
+  display: table-cell;
+  vertical-align: middle;
+}
+
+.logotype span {
+  color: var(--section-color);
+}
+
+.navigation {
+  list-style: none;
+  float: right;
+  height: 100%;
+}
+
+.navigation a {
+  height: 100%;
+  display: table;
+  float: left;
+  padding: 0px 14px;
+  color: white;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 12px;
+  transition: letter-spacing 0.5s ease, color 0.2s ease, padding 0.5s ease;
+  -webkit-transition: letter-spacing 0.5s ease, color 0.2s ease,
+    padding 0.5s ease;
+}
+
+.navigation a:last-child {
+  padding-right: 0px;
+}
+
+.navigation a:hover,
+a.active-nav {
+  color: var(--section-color-light);
+  letter-spacing: 2px;
+  transition: letter-spacing 0.5s ease, color 0.2s ease;
+  -webkit-transition: letter-spacing 0.5s ease, color 0.2s ease;
+}
+
+.navigation a li {
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
+}
+
+/* Responsiveness */
+
+@media screen and (max-width: 1100px) {
+  .navigation a {
+    padding: 0px 4px;
+    transition: letter-spacing 0.5s ease, color 0.2s ease, padding 0.5s ease;
+    -webkit-transition: letter-spacing 0.5s ease, color 0.2s ease,
+      padding 0.5s ease;
+  }
+  .header-content {
+    width: 95%;
+    transition: width 0.5s ease;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .logotype span {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .header-content {
+    display: table;
+  }
+  .logotype {
+    display: table-row;
+    float: none;
+    /* text-align: center; */
+  }
+  .navigation {
+    float: none;
+    align-self: center;
+  }
+  .navigation a {
+    display: table-row;
+    padding-bottom: 10px;
+  }
+  .navigation a li {
+    display: table-cell;
+  }
+}
