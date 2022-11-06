@@ -26,13 +26,14 @@
   background-size: 45px 45px;
 }
 
-.logotype h1 {
+.logotype-text {
   font-family: "Poppins", sans-serif;
   color: rgb(244, 244, 244);
   text-transform: uppercase;
   letter-spacing: 8px;
   font-size: 32px;
   font-weight: bold;
+  font-style: normal;
   height: 100%;
   display: table-cell;
   vertical-align: middle;
