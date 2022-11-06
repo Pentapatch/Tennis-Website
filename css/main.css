@@ -68,22 +68,9 @@ img.circle {
   margin-right: 10px;
 }
 
-/* img {
-  box-sizing: border-box;
-  border-width: 10px;
-  border-radius: 20px;
-  border-color: transparent;
-  border-style: solid;
-  object-fit: cover;
-  transition: all 0.25s ease;
+img {
+  border: 4px solid white;
 }
-
-img:hover {
-  border-width: 2px;
-  border-radius: 0px;
-  border-color: white;
-  transition: all 0.25s ease;
-} */
 
 hr {
   margin-top: 10px;
@@ -105,7 +92,6 @@ input[type="email"] {
   min-width: 200px;
   padding-left: 2px;
   display: table-cell;
-  /* outline: none; */
 }
 
 label {
