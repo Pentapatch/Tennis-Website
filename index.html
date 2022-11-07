@@ -198,7 +198,11 @@
                 />
               </li>
               <li>
-                <label for="booking-member-id">Medlems-id</label>
+                <label
+                  for="booking-member-id"
+                  title="Fyll i ditt Loripsum medlemsnummer om du är medlem hos oss."
+                  >Medlems-id</label
+                >
                 <input
                   id="booking-member-id"
                   type="text"
@@ -206,23 +210,52 @@
                 />
               </li>
               <li>
-                <label for="booking-date">Datum*</label>
+                <label
+                  for="booking-date"
+                  title="Du kan endast boka ett pass från idag och två veckor framöver."
+                  >Datum*</label
+                >
                 <input id="booking-date" type="date" required />
               </li>
               <li>
-                <label for="booking-time">Klockslag*</label>
-                <input id="booking-time" type="time" required />
+                <label
+                  for="booking-time"
+                  title="Vi erbjuder följande tider: 08-12, 12-14, 14-16, 16-18 och 18-20."
+                  >Klockslag*</label
+                >
+                <input
+                  id="booking-time"
+                  type="time"
+                  required
+                  min="08:00"
+                  max="20:00"
+                  onblur="validateTime(this)"
+                  onfocus="resetError(this)"
+                />
+                <p class="error-desc" id="booking-time-error-desc"></p>
               </li>
               <li>
-                <label for="booking-changeroom-mens">Omkl. för herrar?</label>
+                <label
+                  for="booking-changeroom-mens"
+                  title="Välj om du vill använda herrarnas omklädningsrum."
+                  >Omkl. för herrar?</label
+                >
                 <input id="booking-changeroom-mens" type="checkbox" />
               </li>
               <li>
-                <label for="booking-changeroom-womens">Omkl. för damer?</label>
+                <label
+                  for="booking-changeroom-womens"
+                  title="Välj om du vill använda damernas omklädningsrum."
+                  >Omkl. för damer?</label
+                >
                 <input id="booking-changeroom-womens" type="checkbox" />
               </li>
               <li>
-                <label for="booking-sauna">Boka även bastu?</label>
+                <label
+                  for="booking-sauna"
+                  title="Välj om du även vill boka bastun i två timmar efter ditt pass."
+                  >Boka även bastu?</label
+                >
                 <input id="booking-sauna" type="checkbox" />
               </li>
               <li>
@@ -342,5 +375,8 @@
 
     <!-- Set the copyright notice -->
     <script src="javascript/copyright.js"></script>
+
+    <!-- Form validation -->
+    <script src="javascript/validator.js"></script>
   </body>
 </html>
