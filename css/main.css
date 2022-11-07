@@ -240,6 +240,31 @@ label {
   padding-right: 20px;
 }
 
+/* Scroll to top button */
+
+#scroll-to-top-button {
+  background-color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 10px;
+  display: block;
+  position: fixed;
+  right: 20px;
+  z-index: 99;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.5s ease, color 0.2s ease;
+}
+
+#scroll-to-top-button:hover {
+  background-color: rgb(255, 98, 98);
+  color: white;
+  transition: background-color 0.5s ease, color 0.2s ease;
+}
+
 /* Responsiveness */
 
 @media screen and (max-width: 1100px) {
