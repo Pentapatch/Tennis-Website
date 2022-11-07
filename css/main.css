@@ -9,7 +9,6 @@
   --link-active-color: #9b0f0f;
   --link-active-nav-color: #d8dbaf;
   --link-active-line-color: #743d0d;
-  --link-highlight-color: #e67008;
 }
 
 /* General styling */
@@ -191,7 +190,6 @@ label {
   height: 100%;
   display: table;
   margin: 0 auto;
-  /* padding: 20px 0px; */
   transition: width 0.5s ease;
   color: black;
   box-sizing: border-box;

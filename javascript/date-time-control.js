@@ -53,12 +53,11 @@ timeControl.value = hh + ":00";
 
 // Set focus to a input field and scroll the element into view
 function setFocus(id){
-  let element = document.getElementById(id);
-  collapseAll();
-  document.title = element.getBoundingClientRect().height - window.innerHeight;
+    let element = document.getElementById(id);
+    collapseAll();
 
-  if (element.getBoundingClientRect().height - window.innerHeight <= 20){
-    element.scrollIntoView({behavior: 'smooth'}); 
-  }
-
+    // Make sure that the containing div is not too large for the current viewport height
+    if (element.getBoundingClientRect().height - window.innerHeight <= 20){
+      element.scrollIntoView({behavior: 'smooth'}); 
+    }
 }
