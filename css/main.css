@@ -142,7 +142,7 @@ input[type="submit"] {
 input[type="submit"]:hover,
 input[type="submit"]:focus,
 #scroll-to-top-button:hover {
-  background-color: rgb(255, 98, 98);
+  background-color: rgb(71, 192, 111);
   color: white;
   transition: background-color 0.5s ease, color 0.2s ease;
 }
@@ -180,6 +180,10 @@ label {
   vertical-align: middle;
 }
 
+.screen-size {
+  min-height: 100vh;
+}
+
 /* Content */
 
 .content {
@@ -187,7 +191,7 @@ label {
   height: 100%;
   display: table;
   margin: 0 auto;
-  padding: 20px 0px;
+  /* padding: 20px 0px; */
   transition: width 0.5s ease;
   color: black;
   box-sizing: border-box;
@@ -248,10 +252,6 @@ label {
   width: 100%;
   min-height: 50vh;
   position: relative;
-}
-
-.screen-size {
-  min-height: 100vh;
 }
 
 .section-container-b h1 {

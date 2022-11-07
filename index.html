@@ -59,6 +59,7 @@
     <!-- Main body -->
     <div class="content-container">
       <div class="content">
+        <br />
         <h1>Välkommen!</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Doloribus
@@ -178,10 +179,10 @@
               width="300px"
             />
             <p>
-              Vi erbjuder bastu som delas av herrar och damer (endast bokat
-              sällskap). Bastun finns att tillgå i en timme efter genomfört
-              tennispass. Fyll i kryssrutan i formuläret nedan för att boka till
-              bastun.
+              Vi erbjuder bastu som delas av herrar och damer. Bastun finns att
+              tillgå i en timme, direkt efter genomfört tennispass. Det går inte
+              att enbart boka bastun. Fyll i kryssrutan i formuläret nedan för
+              att boka till bastun.
             </p>
             <p>
               <a href="javascript:void(0);" onclick="toggleList('prices');"
@@ -224,13 +225,23 @@
                   <li>
                     <h2>Priser för bastu</h2>
                     <p>
-                      <em>Priset baseras per tillfälle (1 timma efter pass)</em>
+                      <em
+                        >Priset baseras per tillfälle och sällskap (1 timma
+                        bastu direkt efter bokat tennispass)</em
+                      >
                     </p>
                   </li>
                   <li><p>200kr</p></li>
                 </ul>
               </li>
             </ul>
+            <br />
+            <p>
+              Följande tider finns att boka: <strong>08-10</strong>,
+              <strong>10-12</strong>, <strong>12-14</strong>,
+              <strong>14-16</strong>, <strong>16-18</strong> och
+              <strong>18-20</strong>.
+            </p>
           </div>
           <p>
             <em
@@ -308,7 +319,7 @@
               <li>
                 <label
                   for="booking-time"
-                  title="Vi erbjuder följande tider: 08-12, 12-14, 14-16, 16-18 och 18-20."
+                  title="Vi erbjuder följande tider: 08-10, 10-12, 12-14, 14-16, 16-18 och 18-20."
                   >Klockslag*</label
                 >
                 <input
@@ -318,14 +329,26 @@
                   min="08:00"
                   max="20:00"
                   onblur="validateTime(this)"
-                  onfocus="resetError(this)"
+                  onfocus="resetError(this);setFocus('booking');"
                 />
                 <p class="error-desc" id="booking-time-error-desc"></p>
               </li>
               <li>
                 <label
+                  for="booking-indoors"
+                  title="Välj om du vill spela inomhus."
+                  >Inomhusbana?</label
+                >
+                <input
+                  id="booking-indoors"
+                  type="checkbox"
+                  onfocus="setFocus('booking')"
+                />
+              </li>
+              <li>
+                <label
                   for="booking-changeroom-mens"
-                  title="Välj om du vill använda herrarnas omklädningsrum."
+                  title="Välj om någon i sällskapet vill använda herrarnas omklädningsrum."
                   >Omkl. för herrar?</label
                 >
                 <input
@@ -337,7 +360,7 @@
               <li>
                 <label
                   for="booking-changeroom-womens"
-                  title="Välj om du vill använda damernas omklädningsrum."
+                  title="Välj om någon i sällskapet vill använda damernas omklädningsrum."
                   >Omkl. för damer?</label
                 >
                 <input
@@ -349,7 +372,7 @@
               <li>
                 <label
                   for="booking-sauna"
-                  title="Välj om du även vill boka bastun i två timmar efter ditt pass."
+                  title="Välj om du även vill boka till en timmes bastu direkt efter ditt pass."
                   >Boka även bastu?</label
                 >
                 <input
@@ -359,7 +382,11 @@
                 />
               </li>
               <li>
-                <br /><input type="submit" value="Skicka bokningsförfrågan" />
+                <br /><input
+                  type="submit"
+                  value="Skicka bokningsförfrågan"
+                  onfocus="setFocus('booking')"
+                />
               </li>
             </ul>
           </form>
@@ -369,6 +396,7 @@
     <!-- Next section: About -->
     <div class="content-container">
       <div class="content">
+        <br />
         <h2 id="about">Om Loripsum Tennisförening</h2>
         <p>
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus

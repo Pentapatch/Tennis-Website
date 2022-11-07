@@ -46,4 +46,4 @@ function toggleList(id){
 function scrollTo(id){
     let element = document.getElementById(id);
     element.scrollIntoView({behavior: 'smooth'});
-  }
+}

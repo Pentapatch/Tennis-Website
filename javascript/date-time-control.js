@@ -51,8 +51,14 @@ dateControl.max = yyyyMax + "-" + mmMax + "-" + ddMax;
 // Update the time control
 timeControl.value = hh + ":00";
 
+// Set focus to a input field and scroll the element into view
 function setFocus(id){
   let element = document.getElementById(id);
   collapseAll();
-  element.scrollIntoView({behavior: 'smooth'});
+  document.title = element.getBoundingClientRect().height - window.innerHeight;
+
+  if (element.getBoundingClientRect().height - window.innerHeight <= 20){
+    element.scrollIntoView({behavior: 'smooth'}); 
+  }
+
 }
