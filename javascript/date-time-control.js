@@ -50,3 +50,9 @@ dateControl.max = yyyyMax + "-" + mmMax + "-" + ddMax;
 
 // Update the time control
 timeControl.value = hh + ":00";
+
+function setFocus(id){
+  let element = document.getElementById(id);
+  collapseAll();
+  element.scrollIntoView({behavior: 'smooth'});
+}

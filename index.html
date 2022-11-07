@@ -34,9 +34,9 @@
           </a>
           <ul class="navigation">
             <a href="#" class="active-nav"><li>Startsida</li></a>
-            <a href="#about"><li>Om oss</li></a>
-            <a href="#booking"><li>Bokningar</li></a>
-            <a href="#contact"><li>Kontakt</li></a>
+            <a href="javascript:scrollTo('about')"><li>Om oss</li></a>
+            <a href="javascript:scrollTo('booking')"><li>Bokningar</li></a>
+            <a href="javascript:scrollTo('contact')"><li>Kontakt</li></a>
           </ul>
         </div>
       </div>
@@ -48,7 +48,9 @@
         <h1>Nyhet!</h1>
         <p>
           Vi erbjuder nu
-          <a href="#booking">bokning av banor, bastu och omklädningsrum</a>
+          <a href="javascript:scrollTo('booking')"
+            >bokning av banor, bastu och omklädningsrum</a
+          >
           direkt via hemsidan.
         </p>
       </div>
@@ -147,13 +149,89 @@
     <!-- Booking form -->
     <div class="section-container" id="booking">
       <div class="content">
+        <!-- screen-size: Work-around for annoying sizing problem -->
+        <div class="screen-size"></div>
         <div class="v-align">
           <h1>Boka bana/bastu</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid
-            facere saepe quas quidem sequi. Adipisci mollitia voluptates quae a
-            expedita?
+            Lorem ipsum dolor sit amet consectetur
+            <a href="javascript:void(0);" onclick="toggleList('sauna-info');"
+              >adipisicing elit</a
+            >. Aliquid facere saepe quas quidem sequi. Lorem ipsum dolor sit
+            amet consectetur adipisicing elit. Hic ad obcaecati possimus odio
+            sequi, quis praesentium cumque adipisci itaque tempore accusamus
+            quod deleniti, nihil unde animi pariatur rem. Nulla deleniti maiores
+            voluptatum fugit magni porro numquam neque voluptate eveniet?<br />
+            Adipisci
+            <a href="javascript:void(0);" onclick="toggleList('prices');"
+              >mollitia voluptates quae a expedita?</a
+            >
           </p>
+          <div class="collapsible-list" id="sauna-info">
+            <h2>Våran bastu</h2>
+            <p>
+              <em>Vill du njuta av en bastu efter passet?!</em>
+            </p>
+            <img
+              src="images/sauna_illustration.jpg"
+              alt="Illustrationsbild på en hink i en bastu"
+              width="300px"
+            />
+            <p>
+              Vi erbjuder bastu som delas av herrar och damer (endast bokat
+              sällskap). Bastun finns att tillgå i en timme efter genomfört
+              tennispass. Fyll i kryssrutan i formuläret nedan för att boka till
+              bastun.
+            </p>
+            <p>
+              <a href="javascript:void(0);" onclick="toggleList('prices');"
+                >Se aktuellt pris här</a
+              >.
+            </p>
+          </div>
+          <div class="collapsible-list" id="prices">
+            <ul class="split">
+              <li>
+                <ul>
+                  <li>
+                    <h2>Priser för utomhus-tennis</h2>
+                    <p>
+                      <em>Priset baseras per person och per pass (2 timmar)</em>
+                    </p>
+                  </li>
+                  <li><p>Vuxen: 200kr</p></li>
+                  <li><p>Vuxen medlem: 175</p></li>
+                  <li><p>Ungdom (15 och yngre): 150kr</p></li>
+                  <li><p>Ungdom medlem (15 och yngre): 125kr</p></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li>
+                    <h2>Priser för inomhus-tennis</h2>
+                    <p>
+                      <em>Priset baseras per person och per pass (2 timmar)</em>
+                    </p>
+                  </li>
+                  <li><p>Vuxen: 250kr</p></li>
+                  <li><p>Vuxen medlem: 200kr</p></li>
+                  <li><p>Ungdom (15 och yngre): 175kr</p></li>
+                  <li><p>Ungdom medlem (15 och yngre): 150kr</p></li>
+                </ul>
+              </li>
+              <li>
+                <ul>
+                  <li>
+                    <h2>Priser för bastu</h2>
+                    <p>
+                      <em>Priset baseras per tillfälle (1 timma efter pass)</em>
+                    </p>
+                  </li>
+                  <li><p>200kr</p></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
           <p>
             <em
               >Fält markerade med asterisk (<strong>*</strong>) är
@@ -168,6 +246,7 @@
                   id="booking-first-name"
                   type="text"
                   placeholder="Anders"
+                  onfocus="setFocus('booking')"
                   required
                 />
               </li>
@@ -177,6 +256,7 @@
                   id="booking-last-name"
                   type="text"
                   placeholder="Andersson"
+                  onfocus="setFocus('booking')"
                   required
                 />
               </li>
@@ -186,6 +266,7 @@
                   id="booking-email"
                   type="email"
                   placeholder="anders@mail.com"
+                  onfocus="setFocus('booking')"
                   required
                 />
               </li>
@@ -195,6 +276,7 @@
                   id="booking-phone-number"
                   type="tel"
                   placeholder="0720-00 00 00"
+                  onfocus="setFocus('booking')"
                 />
               </li>
               <li>
@@ -207,6 +289,7 @@
                   id="booking-member-id"
                   type="text"
                   placeholder="12KVM8X"
+                  onfocus="setFocus('booking')"
                 />
               </li>
               <li>
@@ -215,7 +298,12 @@
                   title="Du kan endast boka ett pass från idag och två veckor framöver."
                   >Datum*</label
                 >
-                <input id="booking-date" type="date" required />
+                <input
+                  id="booking-date"
+                  type="date"
+                  required
+                  onfocus="setFocus('booking')"
+                />
               </li>
               <li>
                 <label
@@ -240,7 +328,11 @@
                   title="Välj om du vill använda herrarnas omklädningsrum."
                   >Omkl. för herrar?</label
                 >
-                <input id="booking-changeroom-mens" type="checkbox" />
+                <input
+                  id="booking-changeroom-mens"
+                  type="checkbox"
+                  onfocus="setFocus('booking')"
+                />
               </li>
               <li>
                 <label
@@ -248,7 +340,11 @@
                   title="Välj om du vill använda damernas omklädningsrum."
                   >Omkl. för damer?</label
                 >
-                <input id="booking-changeroom-womens" type="checkbox" />
+                <input
+                  id="booking-changeroom-womens"
+                  type="checkbox"
+                  onfocus="setFocus('booking')"
+                />
               </li>
               <li>
                 <label
@@ -256,7 +352,11 @@
                   title="Välj om du även vill boka bastun i två timmar efter ditt pass."
                   >Boka även bastu?</label
                 >
-                <input id="booking-sauna" type="checkbox" />
+                <input
+                  id="booking-sauna"
+                  type="checkbox"
+                  onfocus="setFocus('booking', this)"
+                />
               </li>
               <li>
                 <br /><input type="submit" value="Skicka bokningsförfrågan" />
@@ -389,5 +489,8 @@
 
     <!-- Scroll to top function -->
     <script src="javascript/scroll-to-top.js"></script>
+
+    <!-- Expandable list function -->
+    <script src="javascript/expanded-list.js"></script>
   </body>
 </html>
