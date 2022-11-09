@@ -280,9 +280,11 @@
                   name="booking-email"
                   type="email"
                   placeholder="anders@mail.com"
-                  onfocus="setFocus('booking')"
+                  onfocus="resetError(this);setFocus('booking');"
+                  onblur="validateEmail(this)"
                   required
                 />
+                <p class="error-desc" id="booking-email-error-desc"></p>
               </li>
               <li>
                 <label for="booking-phone-number">Telefonnummer</label>
@@ -390,7 +392,6 @@
                   name="booking-sauna"
                   type="checkbox"
                   onfocus="setFocus('booking', this)"
-                  bla
                 />
               </li>
               <li>
