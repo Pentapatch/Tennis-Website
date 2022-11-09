@@ -71,7 +71,7 @@
   font-family: "Poppins", sans-serif;
   text-decoration: none;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 16px;
   transition: letter-spacing 0.5s ease, color 0.2s ease, padding 0.5s ease;
   -webkit-transition: letter-spacing 0.5s ease, color 0.2s ease,
     padding 0.5s ease;
@@ -128,6 +128,7 @@ a.active-nav {
 @media screen and (max-width: 1100px) {
   .navigation a {
     padding: 0px 4px;
+    font-size: 14px;
     transition: letter-spacing 0.5s ease, color 0.2s ease, padding 0.5s ease;
     -webkit-transition: letter-spacing 0.5s ease, color 0.2s ease,
       padding 0.5s ease;
@@ -138,7 +139,7 @@ a.active-nav {
   }
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 700px) {
   .logotype span {
     display: none;
   }
@@ -150,6 +151,7 @@ a.active-nav {
 @media screen and (max-width: 550px) {
   .header-content {
     display: table;
+    padding-top: 4px;
   }
   .logotype {
     display: table-row;
@@ -165,5 +167,8 @@ a.active-nav {
   }
   .navigation a li {
     display: table-cell;
+  }
+  .navigation a {
+    font-size: 12px;
   }
 }

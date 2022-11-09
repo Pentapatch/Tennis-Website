@@ -16,7 +16,7 @@ function scrollFunction() {
     }
 
     // Check if the user has scrolled down below the set threshold
-    if (document.body.scrollTop >= minScrollTop || document.documentElement.scrollTop >= minScrollTop) {
+    if (window.innerWidth >= 550 && (document.body.scrollTop >= minScrollTop || document.documentElement.scrollTop >= minScrollTop)) {
         scrollButton.style.display = "block";
     } else {
         scrollButton.style.display = "none";
