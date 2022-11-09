@@ -37,7 +37,7 @@ h3 {
 }
 
 p {
-  font-size: medium;
+  font-size: 17px;
   font-family: Arial, Helvetica, sans-serif;
   color: #232020ff;
   margin-bottom: 10px;
@@ -120,6 +120,7 @@ input[type="submit"] {
   min-width: 200px;
   padding-left: 2px;
   display: table-cell;
+  box-sizing: border-box;
 }
 
 input[type="submit"],
@@ -160,6 +161,7 @@ input.error {
   width: 200px;
   padding: 4px;
   display: none;
+  box-sizing: border-box;
 }
 
 label {
@@ -321,5 +323,27 @@ label {
     display: table-row;
     vertical-align: top;
     padding-right: 20px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  h3 {
+    font-size: 20px;
+  }
+  p {
+    font-size: 16px;
+  }
+  .section-container-b p,
+  .section-container-b a {
+    font-size: 16px;
+  }
+  .section-container-b h1 {
+    font-size: 50px;
+  }
+  .section-container-b {
+    min-height: 33vh;
   }
 }

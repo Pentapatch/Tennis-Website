@@ -56,8 +56,7 @@ function setFocus(id){
     let element = document.getElementById(id);
     collapseAll();
 
-    // Make sure that the containing div is not too large for the current viewport height
-    if (element.getBoundingClientRect().height - window.innerHeight <= 20){
+    if (window.innerWidth >= 550){
       element.scrollIntoView({behavior: 'smooth'}); 
     }
 }

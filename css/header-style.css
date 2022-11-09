@@ -17,6 +17,10 @@
   transition: width 0.5s ease;
 }
 
+.header-wrapper {
+  display: contents;
+}
+
 .logotype {
   height: 100%;
   display: table;
@@ -25,6 +29,10 @@
   background-position: 12px;
   background-repeat: no-repeat;
   background-size: 45px 45px;
+}
+
+.header-content a {
+  text-decoration: none;
 }
 
 .logotype-text {
@@ -155,7 +163,12 @@ a.active-nav {
   }
   .logotype {
     display: table-row;
+    /* margin: 0 auto; */
     float: none;
+  }
+  .header-wrapper {
+    display: table;
+    margin: 0 auto;
   }
   .navigation {
     float: none;
