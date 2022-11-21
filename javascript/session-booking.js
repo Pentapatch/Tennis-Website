@@ -3,13 +3,213 @@
 // ¤¤ for the session booking form.               ¤¤
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 
-// Setup the default values
+// Booking configuration
 const timeAheadAllowed = 14;  // The maximum number of days ahead of today, that a customer can book a session
 const firstAvailableTime = 8; // The first hour in a day that a session can begin
 const lastAvailableTime = 20; // The last hour in a day that a session can begin
-const lengthOfBooking = 2;    // The length (in hours) of each session
+const sessionLength = 2;    // The length (in hours) of each session
 
+// Court configuration
+const outdoorCourts = ["Bana A1", "Bana A2", "Bana A3", "Bana A4", "Bana B1", "Bana B2", "Bana C1"];
+const indoorCourts = ["Bana I1", "Bana I2", "Bana I3", "Bana I4"];
+
+// Debug configuration
 const debugFormValidation = true; // Set to true in order to print debug-related information to the console
+const debugBookingSystem = true;  // -- " --
+
+// #############
+// ## Classes ##
+// #############
+
+class BookingManager {
+  #bookings = new Array();
+  #history = new Array();
+  #sessions = new Array();
+
+  constructor() {
+
+  }
+
+  book(date, customer, indoors, changeroomMens, changeroomWomens, sauna) {
+    // Reset the minutes and seconds of the date
+    date.setMinutes(0);
+    date.setSeconds(0);
+    date.setMilliseconds(0);
+
+    // Try to find an entry in bookings that has the date of the specified date
+    let booking;
+    this.#bookings.forEach(current => {
+      // Note: Using .toLocaleDateString() in order to exclude the time
+      if (current.getDate().toLocaleDateString() === date.toLocaleDateString()) {
+        if (debugBookingSystem) console.log(`[BookingManager.book()] Found an excisting entry on this day (${date.toLocaleDateString()}).`);
+        booking = current;
+        return;
+      }
+    });
+
+    // Create a new BookingDay if none was found above
+    if (booking === undefined) {
+      if (debugBookingSystem) console.log(`[BookingManager.book()] Created a new entry for this day (${date.toLocaleDateString()}).`);
+      booking = new BookingDay(date);
+      // Add the booking to the bookings array then sort it
+      this.#bookings.push(booking);
+      this.#bookings.sort();
+    }
+
+    let court = booking.canBook(date, indoors);
+    if (court !== null) {
+
+      // Create a new session object and assign that session to the court
+      let session = new BookingSession(customer, date, changeroomMens, changeroomWomens, sauna, court);
+      court.setAssignee(session);
+
+      // Append this session to the session array
+      this.#sessions.push(session);
+
+      if (debugBookingSystem) {
+        console.log("[BookingManager.book()] Booked a new session:");
+        console.log(court);
+      }
+      return true;
+    }
+
+    if (debugBookingSystem) console.log(`[BookingManager.book()] There was no available court on this day and time (${date.toLocaleString().slice(0, 16)}).`);
+    return false;
+  }
+}
+
+class BookingDay {
+  #date;
+  #times = new Array();
+
+  constructor(date) {
+    this.#date = new Date(new Date(date.toDateString())); // Leave out time
+
+    // Create an array (representing the time of a session) that consists of
+    // arrays of BookingCourt for indoor courts and outdoor courts
+    for (let i = firstAvailableTime; i <= lastAvailableTime; i += sessionLength) {
+      let indoors = new Array();
+      let outdoors = new Array();
+
+      indoorCourts.forEach(court => {
+        indoors.push(new BookingCourt(court, null))
+      });
+  
+      outdoorCourts.forEach(court => {
+        outdoors.push(new BookingCourt(court, null))
+      });
+
+      this.#times.push({time: i, indoorCourts: indoors, outdoorCourts: outdoors})      
+    }
+
+  }
+
+  getDate() {
+    return this.#date;
+  }
+
+  canBook(dateTime, indoors) {
+    // Check if a customer can book a session on this day and time
+    // Returns the first available court that is encountered, or null
+    // if none is available
+
+    // Get the time entry for this date
+    let time;
+    for (let i = 0; i < this.#times.length; i++) {
+      const current = this.#times[i];
+      if (current.time === dateTime.getHours()) {
+        time = current;
+        break; // Break out of the loop
+      }
+    }
+
+    // Check for errors
+    if (time == null) {
+      if (debugBookingSystem) console.log(`[BookingDay.canBook()] Error: Could not find a session at the time of '${dateTime.getHours()}'.`);
+      return null; // Exit the method
+    }
+
+    // Loop trough all indoor or outdoor courts and see if any of them is available to book
+    let courts = indoors ? time.indoorCourts : time.outdoorCourts;
+
+    for (let i = 0; i < courts.length; i++) {
+      const court = courts[i];
+      if (court.isAvailable()) return court;
+    }
+
+    // Return null if the excecution reaches here
+    return null;
+  }
+
+  cancel() {
+    // May not be placed here
+  }
+
+}
+
+class BookingCourt {
+  #name;
+  #assignedTo = null;
+
+  constructor(name, assignedTo) {
+    this.#name = name;
+    this.#assignedTo = assignedTo;
+  }
+
+  getName() {
+    return this.#name;
+  }
+
+  getAssignee() {
+    return this.#assignedTo;
+  }
+
+  setAssignee(session) {
+    this.#assignedTo = session;
+  }
+
+  isBooked() {
+    return this.#assignedTo !== null;
+  }
+
+  isAvailable() {
+    return !this.isBooked();
+  }
+
+}
+
+class BookingSession {
+  #date;
+  #court;
+
+  constructor(customer, date, changeroomMens, changeroomWomens, sauna, court) {
+    this.customer = customer;
+    this.#date = date;
+    this.changeroomMens = changeroomMens;
+    this.changeroomWomens = changeroomWomens;
+    this.sauna = sauna;
+    this.#court = court;
+  }
+
+  getDate() {
+    return this.#date;
+  }
+
+  getCourt() {
+    return this.#court;
+  }
+
+}
+
+class BookingCustomer {
+  constructor(firstName, lastName, email, phone, memberID) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.phone = phone;
+    this.memberID = memberID;
+  }
+}
 
 // ###############
 // ## Main code ##
@@ -19,8 +219,40 @@ const debugFormValidation = true; // Set to true in order to print debug-related
 const dateControl = document.getElementById('booking-date');
 const timeControl = document.getElementById('booking-time');
 
+// Store all booked sessions in an array
+const bookingManager = new BookingManager();
+
 // Set an initial date and time to the booking controls
 setInitialDateAndTime();
+
+// @@@@@@@@@@@@@@@@@@@
+// @@ TESTING BELOW @@
+// @@@@@@@@@@@@@@@@@@@
+
+let bookDate = new Date();
+bookDate.setHours(10);
+
+let bookDate2 = new Date();
+bookDate2.setDate(bookDate.getDate() + 1);
+bookDate2.setHours(12);
+
+let bookDate3 = new Date();
+bookDate3.setDate(bookDate2.getDate() + 1);
+bookDate3.setHours(13);
+
+let customer = new BookingCustomer("Dennis", "Hankvist", "n@h.c", null, null);
+
+bookingManager.book(bookDate, customer, true);
+bookingManager.book(bookDate, customer, true);
+bookingManager.book(bookDate, customer, true);
+bookingManager.book(bookDate, customer, true);
+bookingManager.book(bookDate, customer, true);
+bookingManager.book(bookDate2, customer, true);
+bookingManager.book(bookDate3, customer, true);
+bookingManager.book(bookDate2, customer, false);
+
+console.log("bookingManager:");
+console.log(bookingManager);
 
 // ###############
 // ## Functions ##
@@ -43,7 +275,7 @@ function setInitialDateAndTime() {
   let hour = now.getHours() + 1; // Add one hour so we get the next available session time
 
   // Set the minimum time to the closest free hour
-  if (hour % lengthOfBooking == 1) hour += lengthOfBooking - 1;
+  if (hour % sessionLength == 1) hour += sessionLength - 1;
 
   // Make sure that the time falls within the set limits
   if (hour > lastAvailableTime) {
@@ -70,14 +302,14 @@ function setInitialDateAndTime() {
   timeControl.value = hh + ":00";
 }
 
-// Set focus to a input field and scroll the element into view
 function setFocus(id){
-    let element = document.getElementById(id);
-    collapseAll();
+  // Set focus to a input field and scroll the element into view
+  let element = document.getElementById(id);
+  collapseAll();
 
-    if (window.innerWidth >= 550){
-      element.scrollIntoView({behavior: 'smooth'}); 
-    }
+  if (window.innerWidth >= 550){
+    element.scrollIntoView({behavior: 'smooth'}); 
+  }
 }
 
 function validateTime(control) {
@@ -99,7 +331,7 @@ function validateTime(control) {
   else if (hour > lastAvailableTime){
       setErrorDescription(control, "Välj en tid som är lika med eller tidigare än " + String(lastAvailableTime).padStart(2, "0") + ":00.");
   }
-  else if (hour % lengthOfBooking != 0){
+  else if (hour % sessionLength != 0){
       setErrorDescription(control, "Den valda tiden passerar ett annat pass.");
   }
   
