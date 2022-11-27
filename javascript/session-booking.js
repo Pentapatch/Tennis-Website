@@ -4,18 +4,26 @@
 // ¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤¤
 
 // Booking configuration
-const timeAheadAllowed = 14;  // The maximum number of days ahead of today, that a customer can book a session
+const timeAheadAllowed = 14; // The maximum number of days ahead of today, that a customer can book a session
 const firstAvailableTime = 8; // The first hour in a day that a session can begin
 const lastAvailableTime = 20; // The last hour in a day that a session can begin
-const sessionLength = 2;    // The length (in hours) of each session
+const sessionLength = 2; // The length (in hours) of each session
 
 // Court configuration
-const outdoorCourts = ["Bana A1", "Bana A2", "Bana A3", "Bana A4", "Bana B1", "Bana B2", "Bana C1"];
+const outdoorCourts = [
+  "Bana A1",
+  "Bana A2",
+  "Bana A3",
+  "Bana A4",
+  "Bana B1",
+  "Bana B2",
+  "Bana C1",
+];
 const indoorCourts = ["Bana I1", "Bana I2", "Bana I3", "Bana I4"];
 
 // Debug configuration
 const debugFormValidation = true; // Set to true in order to print debug-related information to the console
-const debugBookingSystem = true;  // -- " --
+const debugBookingSystem = true; // -- " --
 
 // #############
 // ## Classes ##
@@ -26,9 +34,7 @@ class BookingManager {
   #history = new Array();
   #sessions = new Array();
 
-  constructor() {
-
-  }
+  constructor() {}
 
   book(date, customer, indoors, changeroomMens, changeroomWomens, sauna) {
     // Reset the minutes and seconds of the date
@@ -38,10 +44,15 @@ class BookingManager {
 
     // Try to find an entry in bookings that has the date of the specified date
     let booking;
-    this.#bookings.forEach(current => {
+    this.#bookings.forEach((current) => {
       // Note: Using .toLocaleDateString() in order to exclude the time
-      if (current.getDate().toLocaleDateString() === date.toLocaleDateString()) {
-        if (debugBookingSystem) console.log(`[BookingManager.book()] Found an excisting entry on this day (${date.toLocaleDateString()}).`);
+      if (
+        current.getDate().toLocaleDateString() === date.toLocaleDateString()
+      ) {
+        if (debugBookingSystem)
+          console.log(
+            `[BookingManager.book()] Found an excisting entry on this day (${date.toLocaleDateString()}).`
+          );
         booking = current;
         return;
       }
@@ -49,7 +60,10 @@ class BookingManager {
 
     // Create a new BookingDay if none was found above
     if (booking === undefined) {
-      if (debugBookingSystem) console.log(`[BookingManager.book()] Created a new entry for this day (${date.toLocaleDateString()}).`);
+      if (debugBookingSystem)
+        console.log(
+          `[BookingManager.book()] Created a new entry for this day (${date.toLocaleDateString()}).`
+        );
       booking = new BookingDay(date);
       // Add the booking to the bookings array then sort it
       this.#bookings.push(booking);
@@ -58,9 +72,15 @@ class BookingManager {
 
     let court = booking.canBook(date, indoors);
     if (court !== null) {
-
       // Create a new session object and assign that session to the court
-      let session = new BookingSession(customer, date, changeroomMens, changeroomWomens, sauna, court);
+      let session = new BookingSession(
+        customer,
+        date,
+        changeroomMens,
+        changeroomWomens,
+        sauna,
+        court
+      );
       court.setAssignee(session);
 
       // Append this session to the session array
@@ -73,7 +93,12 @@ class BookingManager {
       return true;
     }
 
-    if (debugBookingSystem) console.log(`[BookingManager.book()] There was no available court on this day and time (${date.toLocaleString().slice(0, 16)}).`);
+    if (debugBookingSystem)
+      console.log(
+        `[BookingManager.book()] There was no available court on this day and time (${date
+          .toLocaleString()
+          .slice(0, 16)}).`
+      );
     return false;
   }
 }
@@ -87,21 +112,28 @@ class BookingDay {
 
     // Create an array (representing the time of a session) that consists of
     // arrays of BookingCourt for indoor courts and outdoor courts
-    for (let i = firstAvailableTime; i <= lastAvailableTime; i += sessionLength) {
+    for (
+      let i = firstAvailableTime;
+      i <= lastAvailableTime;
+      i += sessionLength
+    ) {
       let indoors = new Array();
       let outdoors = new Array();
 
-      indoorCourts.forEach(court => {
-        indoors.push(new BookingCourt(court, null))
-      });
-  
-      outdoorCourts.forEach(court => {
-        outdoors.push(new BookingCourt(court, null))
+      indoorCourts.forEach((court) => {
+        indoors.push(new BookingCourt(court, null));
       });
 
-      this.#times.push({time: i, indoorCourts: indoors, outdoorCourts: outdoors})      
+      outdoorCourts.forEach((court) => {
+        outdoors.push(new BookingCourt(court, null));
+      });
+
+      this.#times.push({
+        time: i,
+        indoorCourts: indoors,
+        outdoorCourts: outdoors,
+      });
     }
-
   }
 
   getDate() {
@@ -125,7 +157,10 @@ class BookingDay {
 
     // Check for errors
     if (time == null) {
-      if (debugBookingSystem) console.log(`[BookingDay.canBook()] Error: Could not find a session at the time of '${dateTime.getHours()}'.`);
+      if (debugBookingSystem)
+        console.log(
+          `[BookingDay.canBook()] Error: Could not find a session at the time of '${dateTime.getHours()}'.`
+        );
       return null; // Exit the method
     }
 
@@ -144,7 +179,6 @@ class BookingDay {
   cancel() {
     // May not be placed here
   }
-
 }
 
 class BookingCourt {
@@ -175,7 +209,6 @@ class BookingCourt {
   isAvailable() {
     return !this.isBooked();
   }
-
 }
 
 class BookingSession {
@@ -198,7 +231,6 @@ class BookingSession {
   getCourt() {
     return this.#court;
   }
-
 }
 
 class BookingCustomer {
@@ -216,14 +248,18 @@ class BookingCustomer {
 // ###############
 
 // Store references to elements we will be needing to access
-const dateControl = document.getElementById('booking-date');
-const timeControl = document.getElementById('booking-time');
+const dateControl = document.getElementById("booking-date");
+const timeControl = document.getElementById("booking-time");
+const bookingForm = document.getElementById("booking-form");
 
 // Store all booked sessions in an array
-const bookingManager = new BookingManager();
+var bookingManager = new BookingManager();
 
 // Set an initial date and time to the booking controls
 setInitialDateAndTime();
+
+// Bind onsubmit event of the submit form
+bookingForm.addEventListener("submit", (event) => onSubmit(event));
 
 // @@@@@@@@@@@@@@@@@@@
 // @@ TESTING BELOW @@
@@ -251,12 +287,38 @@ bookingManager.book(bookDate2, customer, true);
 bookingManager.book(bookDate3, customer, true);
 bookingManager.book(bookDate2, customer, false);
 
-console.log("bookingManager:");
-console.log(bookingManager);
+if (debugBookingSystem) {
+  console.log("bookingManager:");
+  console.log(bookingManager);
+}
 
 // ###############
 // ## Functions ##
 // ###############
+
+function onSubmit(e) {
+  // Prevent the page from reloading
+  e.preventDefault();
+
+  // Check if all fields are valid
+  let error = false;
+  if (!validateDate(document.getElementById("booking-date"))) error = true;
+  if (!validateEmail(document.getElementById("booking-email"))) error = true;
+  if (!validatePhoneNumber(document.getElementById("booking-phone-number")))
+    error = true;
+  if (!validateTime(document.getElementById("booking-time"))) error = true;
+
+  if (error) {
+    document.getElementById("booking-first-name").focus();
+    alert(
+      "Bokningen misslyckades. Vänligen se över alla fält i bokningsformuläret."
+    );
+  } else {
+    bookingForm.reset();
+    setInitialDateAndTime();
+    alert("Tack, din bokning är nu bekräftad!");
+  }
+}
 
 function setInitialDateAndTime() {
   // This function will set the closest available booking time
@@ -280,7 +342,7 @@ function setInitialDateAndTime() {
   // Make sure that the time falls within the set limits
   if (hour > lastAvailableTime) {
     hour = firstAvailableTime; // Set to the first available time
-    day += 1;                  // Increment to the next day
+    day += 1; // Increment to the next day
   }
   if (hour < firstAvailableTime) hour = firstAvailableTime;
 
@@ -302,43 +364,54 @@ function setInitialDateAndTime() {
   timeControl.value = hh + ":00";
 }
 
-function setFocus(id){
+function setFocus(id) {
   // Set focus to a input field and scroll the element into view
   let element = document.getElementById(id);
   collapseAll();
 
-  if (window.innerWidth >= 550){
-    element.scrollIntoView({behavior: 'smooth'}); 
+  if (window.innerWidth >= 550) {
+    element.scrollIntoView({ behavior: "smooth" });
   }
 }
 
 function validateTime(control) {
   // This function will validate the value of the time field
   let timeArray = control.value.split(":");
-  
+
   let hour = parseInt(timeArray[0]);
   let minute = parseInt(timeArray[1]);
 
   // Reset the class
   timeControl.className = "";
 
-  if (minute != 0){
-      setErrorDescription(control, "Endast hela timmar kan väljas.");
+  if (minute != 0) {
+    setErrorDescription(control, "Endast hela timmar kan väljas.");
+    return false;
+  } else if (hour < firstAvailableTime) {
+    setErrorDescription(
+      control,
+      "Välj en tid som är lika med eller senare än " +
+        String(firstAvailableTime).padStart(2, "0") +
+        ":00."
+    );
+    return false;
+  } else if (hour > lastAvailableTime) {
+    setErrorDescription(
+      control,
+      "Välj en tid som är lika med eller tidigare än " +
+        String(lastAvailableTime).padStart(2, "0") +
+        ":00."
+    );
+    return false;
+  } else if (hour % sessionLength != 0) {
+    setErrorDescription(control, "Den valda tiden passerar ett annat pass.");
+    return false;
   }
-  else if (hour < firstAvailableTime){
-      setErrorDescription(control, "Välj en tid som är lika med eller senare än " + String(firstAvailableTime).padStart(2, "0") + ":00.");
-  }
-  else if (hour > lastAvailableTime){
-      setErrorDescription(control, "Välj en tid som är lika med eller tidigare än " + String(lastAvailableTime).padStart(2, "0") + ":00.");
-  }
-  else if (hour % sessionLength != 0){
-      setErrorDescription(control, "Den valda tiden passerar ett annat pass.");
-  }
-  
+
+  return true;
 }
 
-function validateEmail(control)
-{
+function validateEmail(control) {
   let prefix = "";
   let assignerCount = 0;
   let domain = "";
@@ -349,36 +422,25 @@ function validateEmail(control)
 
   // Analyze the value
   // Iterate through all characters of the input
-  for (var i = 0; i < value.length; i++)
-  {
-      let c = value.charAt(i);
+  for (var i = 0; i < value.length; i++) {
+    let c = value.charAt(i);
 
-      if (c == "@")
-      {
-          assignerCount++;
-          if (mode == 0) {
-            mode = 1;
-          }
+    if (c == "@") {
+      assignerCount++;
+      if (mode == 0) {
+        mode = 1;
       }
-      else if (c == "." && mode == 1)
-      {
-          mode = 2;
+    } else if (c == "." && mode == 1) {
+      mode = 2;
+    } else {
+      if (mode === 0) {
+        prefix += c;
+      } else if (mode === 1) {
+        domain += c;
+      } else if (mode === 2) {
+        extension += c;
       }
-      else
-      {
-          if (mode === 0)
-          {
-              prefix += c;
-          }
-          else if (mode === 1)
-          {
-              domain += c;
-          }
-          else if (mode === 2)
-          {
-              extension += c;
-          }
-      }
+    }
   }
 
   if (debugFormValidation) {
@@ -390,50 +452,129 @@ function validateEmail(control)
 
   // Set and display validation error description
   let formatString = "[format: prefix@domän.ändelse].";
-  if (prefix == "")
-  {
-      setErrorDescription(control, "Email-addressen saknar en prefix " + formatString);
-  }
-  else if (assignerCount === 0)
-  {
-    setErrorDescription(control, "Email-addressen saknar ett snabel-a (@) " + formatString);
-  }
-  else if (assignerCount > 1)
-  {
-    setErrorDescription(control, "Email-addressen innehåller för många snabel-a (@) " + formatString);
-  }
-  else if (domain === "")
-  {
-    setErrorDescription(control, "Email-addressen saknar ett domän " + formatString);
-  }
-  else if (extension === "")
-  {
-    setErrorDescription(control, "Email-addressen saknar en ändelse " + formatString);
+  if (prefix == "") {
+    setErrorDescription(
+      control,
+      "Email-addressen saknar en prefix " + formatString
+    );
+    return false;
+  } else if (assignerCount === 0) {
+    setErrorDescription(
+      control,
+      "Email-addressen saknar ett snabel-a (@) " + formatString
+    );
+    return false;
+  } else if (assignerCount > 1) {
+    setErrorDescription(
+      control,
+      "Email-addressen innehåller för många snabel-a (@) " + formatString
+    );
+    return false;
+  } else if (domain === "") {
+    setErrorDescription(
+      control,
+      "Email-addressen saknar ett domän " + formatString
+    );
+    return false;
+  } else if (extension === "") {
+    setErrorDescription(
+      control,
+      "Email-addressen saknar en ändelse " + formatString
+    );
+    return false;
   }
 
+  return true;
 }
 
-function setErrorDescription(control, message){
-  // Display an validation error description below the control that
+function validateDate(control) {
+  // As of now, there is no need for custom validation as min and max is set
+  return true;
+}
+
+function validatePhoneNumber(control) {
+  // Make sure no characters are present
+
+  let value = control.value;
+  let format = "[format: 070-00 00 00 eller 011-00 00 00]";
+  let error = false;
+
+  let numbersOnly = "";
+  let separatorCount = 0;
+  for (let i = 0; i < value.length; i++) {
+    let c = value.charAt(i);
+
+    if (isNaN(parseInt(c, 10))) {
+      if (c === "-") {
+        if (++separatorCount !== 1) {
+          setErrorDescription(
+            control,
+            `Telefonnummret får endast innehålla ett bindestreck ${format}.`
+          );
+          error = true;
+          return;
+        }
+      } else if (c === "+") {
+        if (i !== 0) {
+          setErrorDescription(
+            control,
+            `Telefonnummret får endast innehålla ett plus tecken i början av strängen ${format}.`
+          );
+          error = true;
+          return;
+        }
+      } else if (c === " ") {
+        // Allowed
+      } else {
+        setErrorDescription(
+          control,
+          `Telefonnummret får inte innehålla bokstäver eller tecken (förutom ett bindestreck) ${format}.`
+        );
+        error = true;
+        return;
+      }
+    } else {
+      numbersOnly += c;
+    }
+  }
+
+  // Check for warnings
+  if (
+    numbersOnly.length > 0 &&
+    (numbersOnly.length < 5 || numbersOnly.length > 15)
+  ) {
+    setErrorDescription(
+      control,
+      `Det här verkar inte vara ett riktigt telefonnummer. Kontrollera ifall du har fyllt i rätt?`,
+      true
+    );
+  }
+
+  if (debugFormValidation) console.log("Phone number: " + numbersOnly);
+
+  return !error;
+}
+
+function setErrorDescription(control, message, warning = false) {
+  // Display an validation error (or warning) description below the control that
   // failed the validation check.
-  control.className = "error";
+  control.className = !warning ? "error" : "warning";
   const errorDescControl = document.getElementById(control.id + "-error-desc");
+
+  if (!warning) {
+    errorDescControl.classList.remove("warning");
+  } else {
+    errorDescControl.classList.add("warning");
+  }
+
   errorDescControl.textContent = message;
   errorDescControl.style.display = "block";
 }
 
-function resetError(control){
+function resetError(control) {
   // Hide the validation error description below the specified control
   control.className = "";
   const errorDescControl = document.getElementById(control.id + "-error-desc");
   errorDescControl.textContent = "";
   errorDescControl.style.display = "none";
-}
-
-function validateDate(control){
-  // As of now, there is no need for custom validation as min and max is set
-}
-
-function validatePhoneNumber(control){
-  // As of now, there is no need for custom validation of the phone number
 }
