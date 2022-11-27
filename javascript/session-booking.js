@@ -22,8 +22,8 @@ const outdoorCourts = [
 const indoorCourts = ["Bana I1", "Bana I2", "Bana I3", "Bana I4"];
 
 // Debug configuration
-const debugFormValidation = true; // Set to true in order to print debug-related information to the console
-const debugBookingSystem = true; // -- " --
+const debugFormValidation = false; // Set to true in order to print debug-related information to the console
+const debugBookingSystem = false; //   -- " --
 
 // #############
 // ## Classes ##
@@ -90,7 +90,7 @@ class BookingManager {
         console.log("[BookingManager.book()] Booked a new session:");
         console.log(court);
       }
-      return true;
+      return session;
     }
 
     if (debugBookingSystem)
@@ -99,7 +99,7 @@ class BookingManager {
           .toLocaleString()
           .slice(0, 16)}).`
       );
-    return false;
+    return null;
   }
 }
 
@@ -258,34 +258,12 @@ var bookingManager = new BookingManager();
 // Set an initial date and time to the booking controls
 setInitialDateAndTime();
 
-// Bind onsubmit event of the submit form
+// Bind onsubmit event of the form
 bookingForm.addEventListener("submit", (event) => onSubmit(event));
 
 // @@@@@@@@@@@@@@@@@@@
 // @@ TESTING BELOW @@
 // @@@@@@@@@@@@@@@@@@@
-
-let bookDate = new Date();
-bookDate.setHours(10);
-
-let bookDate2 = new Date();
-bookDate2.setDate(bookDate.getDate() + 1);
-bookDate2.setHours(12);
-
-let bookDate3 = new Date();
-bookDate3.setDate(bookDate2.getDate() + 1);
-bookDate3.setHours(13);
-
-let customer = new BookingCustomer("Dennis", "Hankvist", "n@h.c", null, null);
-
-bookingManager.book(bookDate, customer, true);
-bookingManager.book(bookDate, customer, true);
-bookingManager.book(bookDate, customer, true);
-bookingManager.book(bookDate, customer, true);
-bookingManager.book(bookDate, customer, true);
-bookingManager.book(bookDate2, customer, true);
-bookingManager.book(bookDate3, customer, true);
-bookingManager.book(bookDate2, customer, false);
 
 if (debugBookingSystem) {
   console.log("bookingManager:");
@@ -295,6 +273,44 @@ if (debugBookingSystem) {
 // ###############
 // ## Functions ##
 // ###############
+
+function bookSession() {
+  // Create a customer object
+  let customer = new BookingCustomer(
+    document.getElementById("booking-first-name").value,
+    document.getElementById("booking-last-name").value,
+    document.getElementById("booking-email").value,
+    document.getElementById("booking-phone-number").value,
+    document.getElementById("booking-member-id").value
+  );
+
+  // Create a date object
+  let date = new Date(document.getElementById("booking-date").value);
+  date = new Date(
+    `${date.toLocaleDateString()} ${
+      document.getElementById("booking-time").value
+    }`
+  );
+
+  let indoors = document.getElementById("booking-indoors").checked;
+  let changeroomMens = document.getElementById(
+    "booking-changeroom-mens"
+  ).checked;
+  let changeroomWomens = document.getElementById(
+    "booking-changeroom-womens"
+  ).checked;
+  let sauna = document.getElementById("booking-sauna").checked;
+
+  // Try to book the session and return the result
+  return bookingManager.book(
+    date,
+    customer,
+    indoors,
+    changeroomMens,
+    changeroomWomens,
+    sauna
+  );
+}
 
 function onSubmit(e) {
   // Prevent the page from reloading
@@ -308,15 +324,46 @@ function onSubmit(e) {
     error = true;
   if (!validateTime(document.getElementById("booking-time"))) error = true;
 
+  // Give the first input element focus
+  document.getElementById("booking-first-name").focus();
+
   if (error) {
-    document.getElementById("booking-first-name").focus();
+    // Display error message
     alert(
       "Bokningen misslyckades. Vänligen se över alla fält i bokningsformuläret."
     );
   } else {
-    bookingForm.reset();
-    setInitialDateAndTime();
-    alert("Tack, din bokning är nu bekräftad!");
+    // Try to book the session
+    let session = bookSession();
+    if (session) {
+      // Booking was successfull: Display a message
+      bookingForm.reset();
+      setInitialDateAndTime();
+
+      let saunaString = session.sauna
+        ? "\n\nBastun är tillgänglig i en timme direkt efter ditt pass!"
+        : "";
+
+      alert(
+        `Tack ${
+          session.customer.firstName
+        }, din bokning är nu bekräftad!\nDu har blivit tilldelad ${session
+          .getCourt()
+          .getName()}.\n\nNär? ${session
+          .getDate()
+          .toLocaleString()
+          .slice(0, 16)}${saunaString}`
+      );
+    } else {
+      // Fully booked: Display a message
+      let indoors = document.getElementById("booking-indoors").checked
+        ? "inomhus"
+        : "utomhus";
+      let time = document.getElementById("booking-time").value;
+      alert(
+        `Bokingen misslyckades: Tyvärr är alla ${indoors}banor bokade kl ${time}.`
+      );
+    }
   }
 }
 
@@ -545,7 +592,7 @@ function validatePhoneNumber(control) {
   ) {
     setErrorDescription(
       control,
-      `Det här verkar inte vara ett riktigt telefonnummer. Kontrollera ifall du har fyllt i rätt?`,
+      `Det här verkar inte vara ett riktigt telefonnummer? Vänligen kontrollera att du har fyllt i rätt.`,
       true
     );
   }

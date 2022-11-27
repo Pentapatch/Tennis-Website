@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,700&family=News+Cycle:wght@400;700&family=Poppins:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,700&family=News+Cycle:wght@400;700&family=Poppins:wght@200&family=Roboto:wght@100;400;500;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -535,6 +535,21 @@
     >
       Till toppen
     </button>
+
+    <div id="popup" class="popup">
+      <div id="popup-inner" class="popup-inner">
+        <h1>Tack, Dennis!</h1>
+        <br />
+        <p>Din bokning är nu bekräftad.</p>
+        <p>Du har blivit tilldelad <strong>Bana A1</strong>.</p>
+        <button
+          class="popup-button"
+          onclick="javascript:document.getElementById('popup').style.display = 'none'"
+        >
+          Bekräfta och stäng
+        </button>
+      </div>
+    </div>
 
     <!-- Session booking form functionallity -->
     <script src="javascript/session-booking.js"></script>
