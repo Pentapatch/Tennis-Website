@@ -345,8 +345,10 @@
                     type="date"
                     required
                     onfocus="setFocus('booking')"
-                    onblur="storeValue(this)"
+                    onblur="resetError(this);checkForAvailableSession(this)"
+                    onchange="checkForAvailableSession(this)"
                   />
+                  <p class="error-desc" id="booking-date-error-desc"></p>
                 </li>
                 <li>
                   <label
@@ -363,6 +365,7 @@
                     max="20:00"
                     onblur="validateTime(this)"
                     onfocus="resetError(this);setFocus('booking');"
+                    onchange="validateTime(this)"
                   />
                   <p class="error-desc" id="booking-time-error-desc"></p>
                 </li>
@@ -378,6 +381,7 @@
                     type="checkbox"
                     onfocus="setFocus('booking')"
                     onblur="storeValue(this)"
+                    onchange="checkForAvailableSession()"
                   />
                 </li>
                 <li>
