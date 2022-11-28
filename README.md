@@ -3,7 +3,7 @@
 
 2022-11-01 - 2022-12-08
 
-För javascript, css och html-kurs.
+Individuell inlämningsuppgift för Javascript, CSS och HTML-kurs.
 TUC Yrkeshögskola 2022.
 
 ### Kort om uppgiften
@@ -16,6 +16,13 @@ Utöver detta **skall sidan vara responsiv och visas snyggt** i olika storlekar 
 
 Inget krav på visuellt utseende eller övrigt innehåll, men då det här är en html och css kurs så tycker jag det är viktigt
 att sidan också ser bra ut. Därför har jag lagt mycket tid på stylingen, val av färgtema och så vidare.
+
+[Klicka här för att gå till gruppuppgiften](https://github.com/Pentapatch/CarPool)
+
+### Screenshots
+
+![Skärmdump av websidan i desktopversion 1 av 2](/images/site_screenshot.jpg)
+![Skärmdump av websidan i desktopversion 2 av 2](/images/site_screenshot_2.jpg)
 
 ### Responsivitet
 Min sida är responsiv och har ett flertal olika lägen:
