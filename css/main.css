@@ -78,6 +78,83 @@ hr {
   border-top: 1px dotted var(--link-inactive-color);
 }
 
+/* Popup styling */
+
+.popup {
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.85);
+  left: 0;
+  top: 0;
+  z-index: 9999;
+}
+
+.popup-inner {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  background-color: white;
+  padding: 50px;
+  border-radius: 50px;
+}
+
+.popup-button {
+  position: absolute;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+  font-family: "Roboto", sans-serif;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  font-weight: 500;
+  left: 50%;
+  bottom: 0%;
+  transform: translate(-50%, -75%);
+  padding: 10px;
+}
+
+.popup-button:hover,
+.popup-button:focus {
+  background-color: rgb(71, 192, 111);
+  color: white;
+  transition: background-color 0.5s ease, color 0.2s ease;
+}
+
+.popup-inner img {
+  width: 100%;
+  border: none;
+}
+
+.facilities {
+  position: relative;
+}
+
+.facilities-overlay {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: none;
+}
+
+.facilities-overlay.facilities-overlay-shadow {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.facilities-overlay-display {
+  display: block;
+}
+
+#confirmation-sauna {
+  display: none;
+}
+
 /* Collapsible lists layout */
 
 .collapsible-list {
@@ -126,9 +203,10 @@ input[type="submit"] {
 input[type="submit"],
 #scroll-to-top-button {
   background-color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  font-size: 10px;
+  font-family: "Roboto", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
   border: none;
   outline: none;
   border-radius: 8px;
@@ -137,6 +215,7 @@ input[type="submit"],
 
 input[type="submit"] {
   font-size: 14px;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
 }
 
 input[type="submit"]:hover,
@@ -145,6 +224,18 @@ input[type="submit"]:focus,
   background-color: rgb(71, 192, 111);
   color: white;
   transition: background-color 0.5s ease, color 0.2s ease;
+}
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="date"],
+input[type="time"] {
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 4px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
 input.error {
@@ -181,6 +272,10 @@ label {
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 20px;
   padding: 20px;
+}
+
+#asterisk {
+  color: var(--link-active-color);
 }
 
 /* Layout management */
@@ -314,9 +409,11 @@ label {
   cursor: pointer;
   display: block;
   position: fixed;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   right: 20px;
   z-index: 99;
-  transition: background-color 0.5s ease, color 0.2s ease;
+  opacity: 0;
+  transition: background-color 0.5s ease, color 0.2s ease, opacity 0.3s ease;
 }
 
 /* Responsiveness */

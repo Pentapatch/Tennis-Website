@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,700&family=News+Cycle:wght@400;700&family=Poppins:wght@200&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,700&family=News+Cycle:wght@400;700&family=Poppins:wght@200&family=Roboto:wght@100;400;500;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -249,14 +249,16 @@
             </div>
             <p>
               <em
-                >Fält markerade med asterisk (<strong>*</strong>) är
-                obligatoriska.</em
+                >Fält markerade med asterisk (<strong id="asterisk">*</strong>)
+                är obligatoriska.</em
               >
             </p>
             <form id="booking-form">
               <ul>
                 <li>
-                  <label for="booking-first-name">Förnamn*</label>
+                  <label for="booking-first-name"
+                    >Förnamn<strong id="asterisk">*</strong></label
+                  >
                   <input
                     id="booking-first-name"
                     name="booking-first-name"
@@ -268,7 +270,9 @@
                   />
                 </li>
                 <li>
-                  <label for="booking-last-name">Efternamn*</label>
+                  <label for="booking-last-name"
+                    >Efternamn<strong id="asterisk">*</strong></label
+                  >
                   <input
                     id="booking-last-name"
                     name="booking-last-name"
@@ -280,7 +284,9 @@
                   />
                 </li>
                 <li>
-                  <label for="booking-email">E-mail*</label>
+                  <label for="booking-email"
+                    >E-mail<strong id="asterisk">*</strong></label
+                  >
                   <input
                     id="booking-email"
                     name="booking-email"
@@ -328,7 +334,7 @@
                   <label
                     for="booking-date"
                     title="Du kan endast boka ett pass från idag och två veckor framöver."
-                    >Datum*</label
+                    >Datum<strong id="asterisk">*</strong></label
                   >
                   <input
                     id="booking-date"
@@ -342,7 +348,7 @@
                   <label
                     for="booking-time"
                     title="Vi erbjuder följande tider: 08-10, 10-12, 12-14, 14-16, 16-18 och 18-20."
-                    >Klockslag*</label
+                    >Klockslag<strong id="asterisk">*</strong></label
                   >
                   <input
                     id="booking-time"
@@ -535,6 +541,51 @@
     >
       Till toppen
     </button>
+
+    <div id="popup" class="popup">
+      <div id="popup-inner" class="popup-inner">
+        <h1>
+          Tack <span id="confirmation-name">[name]</span>, bokning bekräftad!
+        </h1>
+        <br />
+        <p>
+          Du har blivit tilldelad
+          <strong id="confirmation-court">[court]</strong> klockan
+          <strong id="confirmation-time">[time]</strong> vid
+          <strong id="confirmation-date">[date]</strong>
+        </p>
+        <p id="confirmation-sauna">
+          <em
+            >Du kan åtnjuta en timmes bastu direkt efter ditt pass (<span
+              id="confirmation-sauna-time"
+              >[sauna-time]</span
+            >)</em
+          >
+        </p>
+        <br />
+        <div class="facilities">
+          <img src="images/facilities_map.png" alt="A map of our facilities" />
+          <img
+            id="confirmation-court-image"
+            class="facilities-overlay facilities-overlay-shadow facilities-overlay-display"
+            src=""
+            alt="Image overlay that displays the booked court on the facilities map"
+          />
+          <img
+            id="confirmation-sauna-image"
+            class="facilities-overlay"
+            src="images/facilities_sauna.png"
+            alt="Image overlay that displays the booked sauna on the facilities map"
+          />
+        </div>
+        <button
+          class="popup-button"
+          onclick="javascript:hideBookingConfirmation()"
+        >
+          Bekräfta och stäng
+        </button>
+      </div>
+    </div>
 
     <!-- Session booking form functionallity -->
     <script src="javascript/session-booking.js"></script>
