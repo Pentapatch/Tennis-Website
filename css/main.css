@@ -83,15 +83,14 @@ hr {
 .popup {
   width: 100vw;
   height: 100vh;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.85);
   left: 0;
   top: 0;
   z-index: 9999;
-  display: none;
 }
 
 .popup-inner {
@@ -126,6 +125,34 @@ hr {
   background-color: rgb(71, 192, 111);
   color: white;
   transition: background-color 0.5s ease, color 0.2s ease;
+}
+
+.popup-inner img {
+  width: 100%;
+  border: none;
+}
+
+.facilities {
+  position: relative;
+}
+
+.facilities-overlay {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: none;
+}
+
+.facilities-overlay.facilities-overlay-shadow {
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.facilities-overlay-display {
+  display: block;
+}
+
+#confirmation-sauna {
+  display: none;
 }
 
 /* Collapsible lists layout */
@@ -199,6 +226,18 @@ input[type="submit"]:focus,
   transition: background-color 0.5s ease, color 0.2s ease;
 }
 
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="date"],
+input[type="time"] {
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  padding: 4px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
 input.error {
   color: rgb(164, 0, 0);
 }
@@ -233,6 +272,10 @@ label {
   background-color: rgba(255, 255, 255, 0.7);
   border-radius: 20px;
   padding: 20px;
+}
+
+#asterisk {
+  color: var(--link-active-color);
 }
 
 /* Layout management */
@@ -366,9 +409,11 @@ label {
   cursor: pointer;
   display: block;
   position: fixed;
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
   right: 20px;
   z-index: 99;
-  transition: background-color 0.5s ease, color 0.2s ease;
+  opacity: 0;
+  transition: background-color 0.5s ease, color 0.2s ease, opacity 0.3s ease;
 }
 
 /* Responsiveness */

@@ -340,20 +340,8 @@ function onSubmit(e) {
       bookingForm.reset();
       setInitialDateAndTime();
 
-      let saunaString = session.sauna
-        ? "\n\nBastun är tillgänglig i en timme direkt efter ditt pass!"
-        : "";
-
-      alert(
-        `Tack ${
-          session.customer.firstName
-        }, din bokning är nu bekräftad!\nDu har blivit tilldelad ${session
-          .getCourt()
-          .getName()}.\n\nNär? ${session
-          .getDate()
-          .toLocaleString()
-          .slice(0, 16)}${saunaString}`
-      );
+      // Display a popup window that confirms the booking
+      displayBookingConfirmation(session);
     } else {
       // Fully booked: Display a message
       let indoors = document.getElementById("booking-indoors").checked
@@ -365,6 +353,73 @@ function onSubmit(e) {
       );
     }
   }
+}
+
+function displayBookingConfirmation(session) {
+  // Get a reference to the elements that we need to manipulate
+  let popup = document.getElementById("popup");
+  let name = document.getElementById("confirmation-name");
+  let court = document.getElementById("confirmation-court");
+  let sauna = document.getElementById("confirmation-sauna");
+  let time = document.getElementById("confirmation-time");
+  let date = document.getElementById("confirmation-date");
+  let saunaTime = document.getElementById("confirmation-sauna-time");
+  let courtOverlay = document.getElementById("confirmation-court-image");
+  let saunaOverlay = document.getElementById("confirmation-sauna-image");
+
+  // Set the values of the elements
+  name.innerText = session.customer.firstName;
+  court.innerText = session.getCourt().getName();
+  time.innerText = session.getDate().toLocaleTimeString().slice(0, 5);
+  date.innerText = session.getDate().toLocaleDateString().slice(0, 10);
+  let from = session.getDate().getHours() + sessionLength;
+  let to = from + 1;
+  saunaTime.innerText = `${from.toString().padStart(2, "0")}-${to
+    .toString()
+    .padStart(2, "0")}`;
+
+  // Display the sauna message if sauna was booked
+  if (session.sauna) sauna.style.display = "block";
+
+  // Display the overlays
+  courtOverlay.src = `images/facilities_${session
+    .getCourt()
+    .getName()
+    .slice(5, 7)}.png`;
+  if (session.sauna) saunaOverlay.classList.add("facilities-overlay-display");
+
+  // Display the popup message
+  popup.style.display = "flex";
+}
+
+function hideBookingConfirmation() {
+  // Get a reference to the elements that we need to manipulate
+  let popup = document.getElementById("popup");
+  let name = document.getElementById("confirmation-name");
+  let court = document.getElementById("confirmation-court");
+  let sauna = document.getElementById("confirmation-sauna");
+  let time = document.getElementById("confirmation-time");
+  let date = document.getElementById("confirmation-date");
+  let saunaTime = document.getElementById("confirmation-sauna-time");
+  let courtOverlay = document.getElementById("confirmation-court-image");
+  let saunaOverlay = document.getElementById("confirmation-sauna-image");
+
+  // Clear the values of the elements
+  name.innerText = "[name]";
+  court.innerText = "[court]";
+  time.innerText = "[time]";
+  date.innerText = "[date]";
+  saunaTime.innerText = "[sauna-time]";
+
+  // Clear the path to the overlay image
+  courtOverlay.src = "";
+
+  // Hide the sauna message
+  sauna.style.display = "none";
+  saunaOverlay.classList.remove("facilities-overlay-display");
+
+  // Hide the popup message
+  popup.style.display = "none";
 }
 
 function setInitialDateAndTime() {
