@@ -23,7 +23,7 @@ const indoorCourts = ["Bana I1", "Bana I2", "Bana I3", "Bana I4"];
 
 // Debug configuration
 const debugFormValidation = false; // Set to true in order to print debug-related information to the console
-const debugBookingSystem = false; //   -- " --
+const debugBookingSystem = false; //  -- " --
 
 // #############
 // ## Classes ##
@@ -255,8 +255,8 @@ const bookingForm = document.getElementById("booking-form");
 // Store all booked sessions in an array
 var bookingManager = new BookingManager();
 
-// Set an initial date and time to the booking controls
-setInitialDateAndTime();
+// Give the controls initial values (either stored values, default values or empty)
+initializeForm();
 
 // Bind onsubmit event of the form
 bookingForm.addEventListener("submit", (event) => onSubmit(event));
@@ -273,6 +273,58 @@ if (debugBookingSystem) {
 // ###############
 // ## Functions ##
 // ###############
+
+function initializeForm() {
+  // Get a reference to all controls that is contained within the form
+  let controls = bookingForm.querySelectorAll("input");
+
+  // Set an initial date and time to the booking controls
+  // This can be overridden by stored values below
+  setInitialDateAndTime();
+
+  // Loop trough all controls
+  controls.forEach((control) => {
+    let value = sessionStorage.getItem(control.name);
+
+    // Do not change the submit button
+    if (control.type === "submit") return;
+
+    // If a value with the key of the control's name is stored:
+    // set the value of the control to the stored value
+    if (value) {
+      if (control.type === "checkbox") {
+        control.checked = value === "true"; // Convert from string to boolean
+      } else {
+        control.value = value;
+      }
+    }
+  });
+}
+
+function resetForm() {
+  resetStoredValues();
+  bookingForm.reset();
+  setInitialDateAndTime();
+}
+
+function resetStoredValues() {
+  // Get a reference to all controls that is contained within the form
+  let controls = bookingForm.querySelectorAll("input");
+
+  // Loop trough all stored values and remove them
+  controls.forEach((control) => {
+    sessionStorage.removeItem(control.name);
+  });
+}
+
+function storeValue(control) {
+  // Temporary store the accepted input
+  // (useful if the site crashes or the user accidentally reloads the page)
+  sessionStorage.setItem(
+    control.name,
+    control.type === "checkbox" ? control.checked : control.value
+  );
+}
 
 function bookSession() {
   // Create a customer object
@@ -337,8 +389,9 @@ function onSubmit(e) {
     let session = bookSession();
     if (session) {
       // Booking was successfull: Display a message
-      bookingForm.reset();
-      setInitialDateAndTime();
+
+      // Reset the form and all stored values
+      resetForm();
 
       // Display a popup window that confirms the booking
       displayBookingConfirmation(session);
@@ -471,8 +524,16 @@ function setFocus(id) {
   let element = document.getElementById(id);
   collapseAll();
 
-  if (window.innerWidth >= 550) {
-    element.scrollIntoView({ behavior: "smooth" });
+  // Only scroll if on desktop
+  let isMobile = window.matchMedia(
+    "only screen and (max-width: 1100px)"
+  ).matches;
+  if (!isMobile) {
+    // Workaround: Delay the scrolling by 100ms in order to allow
+    // checkboxes to be toggled when clicked.
+    setTimeout(function () {
+      element.scrollIntoView({ behavior: "smooth" });
+    }, 100);
   }
 }
 
@@ -509,6 +570,9 @@ function validateTime(control) {
     setErrorDescription(control, "Den valda tiden passerar ett annat pass.");
     return false;
   }
+
+  // Store the value of the control
+  storeValue(control);
 
   return true;
 }
@@ -586,11 +650,18 @@ function validateEmail(control) {
     return false;
   }
 
+  // Store the value of the control
+  storeValue(control);
+
   return true;
 }
 
 function validateDate(control) {
   // As of now, there is no need for custom validation as min and max is set
+
+  // Store the value of the control
+  storeValue(control);
+
   return true;
 }
 
@@ -640,7 +711,7 @@ function validatePhoneNumber(control) {
     }
   }
 
-  // Check for warnings
+  // Check for warnings (does not affect validation status)
   if (
     numbersOnly.length > 0 &&
     (numbersOnly.length < 5 || numbersOnly.length > 15)
@@ -651,6 +722,9 @@ function validatePhoneNumber(control) {
       true
     );
   }
+
+  // Store the value of the control
+  storeValue(control);
 
   if (debugFormValidation) console.log("Phone number: " + numbersOnly);
 
