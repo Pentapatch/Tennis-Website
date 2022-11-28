@@ -21,8 +21,9 @@ att sidan också ser bra ut. Därför har jag lagt mycket tid på stylingen, val
 
 ### Screenshots
 
-![Skärmdump av websidan i desktopversion 1 av 2](/images/site_screenshot.jpg)
-![Skärmdump av websidan i desktopversion 2 av 2](/images/site_screenshot_2.jpg)
+![Skärmdump av websidan i desktopversion 1 av 3](/images/site_screenshot.jpg)
+![Skärmdump av websidan i desktopversion 2 av 3](/images/site_screenshot_2.jpg)
+![Skärmdump av websidan i desktopversion 3 av 3](/images/site_screenshot_3.jpg)
 
 ### Responsivitet
 Min sida är responsiv och har ett flertal olika lägen:
@@ -36,6 +37,7 @@ Uppgiften säger att det räcker med ett bokningsformulär med validering, men f
 utvecklat det hela mycket mer än så.
 
 - Jag använder mig av **OOP** för att bygga ett bokninssystem som *hanterar bokningar över flera dagar*
+- Automatisk tilldelning av ledig bana, visuell bekräftelse av bana på områdeskarta vid lyckad bokning
 - Jag har skrivit **egna valideringsmetoder** för många av fälten i bokningsformuläret som är *mer invecklade än de inbyggda i input-elementen*
 - Jag använder **session-storage** för att tillfälligt lagra validerade formulärvärden, *som sedan laddas in om sidan råkar uppdateras*
 - Script som automatiskt förväljer närmsta tillgängliga datum och tid
