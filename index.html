@@ -266,6 +266,7 @@
                     placeholder="Anders"
                     maxlength="30"
                     onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                     required
                   />
                 </li>
@@ -280,6 +281,7 @@
                     placeholder="Andersson"
                     maxlength="30"
                     onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                     required
                   />
                 </li>
@@ -328,6 +330,7 @@
                     placeholder="12KVM8X"
                     maxlength="7"
                     onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                   />
                 </li>
                 <li>
@@ -342,6 +345,7 @@
                     type="date"
                     required
                     onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                   />
                 </li>
                 <li>
@@ -373,6 +377,7 @@
                     name="booking-indoors"
                     type="checkbox"
                     onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                   />
                 </li>
                 <li>
@@ -386,6 +391,7 @@
                     name="booking-changeroom-mens"
                     type="checkbox"
                     onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                   />
                 </li>
                 <li>
@@ -399,6 +405,7 @@
                     name="booking-changeroom-womens"
                     type="checkbox"
                     onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                   />
                 </li>
                 <li>
@@ -411,7 +418,8 @@
                     id="booking-sauna"
                     name="booking-sauna"
                     type="checkbox"
-                    onfocus="setFocus('booking', this)"
+                    onfocus="setFocus('booking')"
+                    onblur="storeValue(this)"
                   />
                 </li>
                 <li>
