@@ -101,6 +101,31 @@ class BookingManager {
       );
     return null;
   }
+
+  getDay(date) {
+    // Loop through all registered booking days and return the day if an entry for that day excists
+    for (let i = 0; i < this.#bookings.length; i++) {
+      const day = this.#bookings[i];
+      if (day.getDate().toLocaleDateString() === date.toLocaleDateString()) {
+        return day;
+      }
+    }
+
+    // Return null if no entry was found on that day
+    return null;
+  }
+
+  isSessionAvailable(date, indoors) {
+    let day = this.getDay(date);
+
+    if (!day) {
+      // No day registered for that date (all courts are available at all times of the day): Return true
+      return true;
+    } else {
+      // Check if we can book a session on that day then return the result
+      return day.canBook(date, indoors);
+    }
+  }
 }
 
 class BookingDay {
@@ -370,7 +395,6 @@ function onSubmit(e) {
 
   // Check if all fields are valid
   let error = false;
-  if (!validateDate(document.getElementById("booking-date"))) error = true;
   if (!validateEmail(document.getElementById("booking-email"))) error = true;
   if (!validatePhoneNumber(document.getElementById("booking-phone-number")))
     error = true;
@@ -434,6 +458,9 @@ function displayBookingConfirmation(session) {
   // Display the sauna message if sauna was booked
   if (session.sauna) sauna.style.display = "block";
 
+  // Bind the document.keydown to a function in order to be able to close the popup via the keyboard
+  document.addEventListener("keydown", (e) => onDocumentKeyDown(e));
+
   // Display the overlays
   courtOverlay.src = `images/facilities_${session
     .getCourt()
@@ -467,12 +494,28 @@ function hideBookingConfirmation() {
   // Clear the path to the overlay image
   courtOverlay.src = "";
 
+  // Remove the binding of document.keydown
+  // TODO: Cannot remove the binding since I'm passing arguments :@
+  //       I'll have to write a wrapper function for this to work..
+  //document.removeEventListener("keydown", onDocumentKeyDown);
+
   // Hide the sauna message
   sauna.style.display = "none";
   saunaOverlay.classList.remove("facilities-overlay-display");
 
   // Hide the popup message
   popup.style.display = "none";
+}
+
+function onDocumentKeyDown(e) {
+  // The purpose of this function is to be able to close the booking
+  // confirmation popup message by pressing enter or escape
+
+  if (e.key === "Enter" || e.key === "Escape") {
+    if (document.getElementById("popup").style.display !== "none") {
+      hideBookingConfirmation();
+    }
+  }
 }
 
 function setInitialDateAndTime() {
@@ -571,10 +614,15 @@ function validateTime(control) {
     return false;
   }
 
-  // Store the value of the control
-  storeValue(control);
+  // Check if there are any available courts this date and time
+  if (checkForAvailableSession()) {
+    // Store the value of the control
+    storeValue(control);
+    return true;
+  }
 
-  return true;
+  // No session was available at this date and time
+  return false;
 }
 
 function validateEmail(control) {
@@ -656,13 +704,36 @@ function validateEmail(control) {
   return true;
 }
 
-function validateDate(control) {
-  // As of now, there is no need for custom validation as min and max is set
+function checkForAvailableSession(control) {
+  date = new Date(document.getElementById("booking-date").value);
+  time = document.getElementById("booking-time").value;
+  date = new Date(`${date.toLocaleDateString()} ${time}`);
+  let indoors = document.getElementById("booking-indoors").checked;
 
-  // Store the value of the control
-  storeValue(control);
+  if (bookingManager.isSessionAvailable(date, indoors)) {
+    // Store the value of the control
+    if (control) storeValue(control);
 
-  return true;
+    // Reset eventual errors
+    resetError(document.getElementById("booking-date"));
+    resetError(document.getElementById("booking-time"));
+
+    return true;
+  }
+
+  // No session was available at this date and time
+  let isDateControl = control != null;
+  if (!control) control = document.getElementById("booking-time");
+
+  // Set the error description
+  setErrorDescription(
+    control,
+    `Det finns tyvärr inga lediga ${
+      indoors ? "inomhus" : "utomhus"
+    }banor denna ${isDateControl ? "dag och tid" : "tid och dag"}.`
+  );
+
+  return false;
 }
 
 function validatePhoneNumber(control) {
