@@ -595,7 +595,7 @@ function validateTime(control) {
 
   if (date.toLocaleDateString() == now.toLocaleDateString()) {
     // Same day
-    if (hour <= now.getHours()) {
+    if (hour <= now.getHours() && minute <= now.getMinutes()) {
       setErrorDescription(control, "Tiden har redan passerat.");
       return false;
     }
