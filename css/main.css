@@ -87,7 +87,8 @@ hr {
   align-items: center;
   justify-content: center;
   position: fixed;
-  background-color: rgba(0, 0, 0, 0.85);
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
   left: 0;
   top: 0;
   z-index: 9999;

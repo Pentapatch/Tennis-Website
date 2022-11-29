@@ -590,6 +590,17 @@ function validateTime(control) {
   // Reset the class
   timeControl.className = "";
 
+  let date = new Date(document.getElementById("booking-date").value);
+  let now = new Date();
+
+  if (date.toLocaleDateString() == now.toLocaleDateString()) {
+    // Same day
+    if (hour <= now.getHours()) {
+      setErrorDescription(control, "Tiden har redan passerat.");
+      return false;
+    }
+  }
+
   if (minute != 0) {
     setErrorDescription(control, "Endast hela timmar kan väljas.");
     return false;
