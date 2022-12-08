@@ -17,7 +17,10 @@ Utöver detta **skall sidan vara responsiv och visas snyggt** i olika storlekar 
 Inget krav på visuellt utseende eller övrigt innehåll, men då det här är en html och css kurs så tycker jag det är viktigt
 att sidan också ser bra ut. Därför har jag ändå lagt ner en del tid på stylingen, val av färgtema och så vidare.
 
-[Klicka här för att gå till gruppuppgiften](https://github.com/Pentapatch/CarPool)
+### Gruppuppgift
+
+Detta har varit en individuell uppgift. Vi har även gjort en gruppuppgift, där vi skulle göra en hemsida för en samåkningstjänst.
+[Klicka här för att gå till gruppuppgiften](https://github.com/Pentapatch/CarPool).
 
 ### Screenshots
 
@@ -44,8 +47,8 @@ utvecklat det hela mycket mer än så.
 - Flertalet övriga script som exempelvis scroll to top, show/hide container
 
 ### React
-Då detta varit högst oklart och kommit på tal sent in på kursen så har jag valt att skriva andra sidor i React, istället
-för att konvertera hela den här websidan.
+Jag använder endast html, css och vanilla javascript för denna sidan. För att lära mig *React* har jag istället haft andra projekt.
+Ett exempel är denna [datepicker-widget](https://github.com/Pentapatch/React-Calendar).
 
 ### Disclaimers
 - Jag sparar inte **BookingManager**-objektet i **localStorage** då man inte kan spara Klasser där. Ifall jag får tid över kommer jag att titta på möjligheten att omvandla och spara vanliga js-objekt istället, för att sedan bygga ett nytt BookingManager objekt från det.
